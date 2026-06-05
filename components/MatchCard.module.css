@@ -1,0 +1,24 @@
+.card {
+  margin-bottom: 12px;
+}
+
+.teams {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.inputs {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.odds {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #888;
+}
+
+.button {
+  margin-top: 12px;
+}

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import styles from "./layout.module.css";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
 export const metadata: Metadata = {
   title: "App",
@@ -13,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <nav className={styles.nav}>Oddaro</nav>
+        <MantineProvider>{children}</MantineProvider>
+        <footer>Bye</footer>
+      </body>
     </html>
   );
 }
