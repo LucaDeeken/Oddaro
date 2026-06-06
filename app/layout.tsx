@@ -17,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className={styles.nav}>Oddaro</nav>
-        <MantineProvider>{children}</MantineProvider>
-        <footer>Bye</footer>
+        <MantineProvider>
+          <nav className={styles.nav}>Oddaro</nav>
+          {children}
+          <footer>Bye</footer>
+        </MantineProvider>
       </body>
     </html>
   );

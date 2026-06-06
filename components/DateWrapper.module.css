@@ -1,0 +1,13 @@
+.wholeSection {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr;
+  row-gap: 5px;
+  column-gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .wholeSection {
+    grid-template-columns: 1fr 1fr;
+  }
+}
