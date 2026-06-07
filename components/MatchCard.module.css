@@ -1,5 +1,8 @@
 .card {
-  margin-bottom: 12px;
+  display: grid;
+  margin-bottom: 8px;
+  align-content: end;
+  padding: 8px;
 }
 
 .teams {
@@ -11,14 +14,57 @@
   margin-top: 12px;
   display: flex;
   gap: 10px;
+  text-align: center;
 }
 
-.odds {
-  margin-top: 8px;
+.numberInput {
+  width: 8.5rem;
+  display: grid;
+  align-items: end;
+}
+
+.label {
+  text-align: center;
+  padding-bottom: 3px;
   font-size: 13px;
-  color: #888;
+}
+.input {
+  width: 5rem;
+  justify-self: center;
+  text-align: center;
+  font-weight: 700;
+}
+.spanBetweenGoals {
+  font-weight: 700;
+  align-self: flex-end;
+  padding-bottom: 8px;
 }
 
-.button {
-  margin-top: 12px;
+.oddsWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  align-items: center;
+}
+
+.oddsLabel {
+  color: #737577;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.oddsValue {
+  font-weight: 600;
+  color: #1ac26b;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .label {
+    font-size: 14px;
+  }
 }

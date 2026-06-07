@@ -10,7 +10,7 @@ export default function DateWrapper({
 }) {
   return (
     <section>
-      <Title order={3} mb="md" mt="md">
+      <Title className={styles.title} order={3} mb="md" mt="md">
         {date}
       </Title>
 

@@ -32,6 +32,8 @@ body {
   line-height: 1.5;
   /* 5. Improve text rendering */
   -webkit-font-smoothing: antialiased;
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
 }
 
 /* 6. Improve media defaults */
@@ -82,4 +84,5 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+  height: 100%;
 }

@@ -20,7 +20,7 @@ export default function RootLayout({
         <MantineProvider>
           <nav className={styles.nav}>Oddaro</nav>
           {children}
-          <footer>Bye</footer>
+          <footer className={styles.footer}>Bye</footer>
         </MantineProvider>
       </body>
     </html>

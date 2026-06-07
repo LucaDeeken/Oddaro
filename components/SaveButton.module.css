@@ -1,0 +1,13 @@
+.button {
+  transition: all 0.2s ease;
+}
+
+.saved {
+  background: #3dff9a;
+  color: #04130c;
+  transform: scale(1.03);
+}
+
+.saved:hover {
+  background: #3dff9a;
+}

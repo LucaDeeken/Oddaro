@@ -6,6 +6,10 @@
   column-gap: 20px;
 }
 
+.title {
+  color: rgb(226, 226, 226);
+}
+
 @media (min-width: 768px) {
   .wholeSection {
     grid-template-columns: 1fr 1fr;
