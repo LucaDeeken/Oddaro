@@ -24,7 +24,7 @@ export default function MatchCard({ match }) {
             label: styles.label,
             input: styles.input,
           }}
-          label={match.home}
+          label={match.home_team}
           min={0}
           max={9}
           placeholder="0"
@@ -37,7 +37,7 @@ export default function MatchCard({ match }) {
             label: styles.label,
             input: styles.input,
           }}
-          label={match.away}
+          label={match.away_team}
           min={0}
           max={9}
           placeholder="0"
