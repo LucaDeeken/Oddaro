@@ -1,11 +1,15 @@
 "use client";
 import { Card, NumberInput, Text } from "@mantine/core";
 import styles from "./MatchCard.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function MatchCard({ match }) {
+export default function MatchCard({ match, onPredictionChange }) {
   const [homeGoals, setHomeGoals] = useState<number | null>(null);
   const [awayGoals, setAwayGoals] = useState<number | null>(null);
+
+  useEffect(() => {
+    onPredictionChange(match, homeGoals, awayGoals);
+  }, [homeGoals, awayGoals]);
 
   function getWinner() {
     if (homeGoals === null || awayGoals === null) return "";
