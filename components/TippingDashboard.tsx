@@ -29,7 +29,7 @@ export default function TippingDashboard({ matchesCup }) {
     }));
   }
 
-  //console.log(matchesCup);
+  console.log(matchesCup);
   console.log(predictions);
 
   //hole alle individuellen Datumseinträge

@@ -1,7 +1,8 @@
 "use client";
-import { Card, NumberInput, Text } from "@mantine/core";
+import { Card, NumberInput } from "@mantine/core";
 import styles from "./MatchCard.module.css";
 import { useState, useEffect } from "react";
+import { getHeadToHeadPoints } from "@/lib/pointsCalculator";
 
 export default function MatchCard({ match, onPredictionChange }) {
   const [homeGoals, setHomeGoals] = useState<number | null>(null);
@@ -11,20 +12,6 @@ export default function MatchCard({ match, onPredictionChange }) {
     onPredictionChange(match, homeGoals, awayGoals);
   }, [homeGoals, awayGoals]);
 
-  function getWinner() {
-    if (homeGoals === null || awayGoals === null) return "";
-
-    if (homeGoals > awayGoals) {
-      return match.home_team;
-    }
-
-    if (awayGoals > homeGoals) {
-      return match.away_team;
-    }
-
-    return "DRAW";
-  }
-
   return (
     <Card
       shadow="sm"
@@ -33,11 +20,6 @@ export default function MatchCard({ match, onPredictionChange }) {
       withBorder
       className={styles.card}
     >
-      {/* Teams
-      <Text className={styles.teams}>
-        {match.home} vs {match.away}
-      </Text> */}
-
       {/* Inputs */}
       <div className={styles.inputs}>
         <NumberInput
@@ -83,9 +65,15 @@ export default function MatchCard({ match, onPredictionChange }) {
 
       {/* Odds Info */}
       <div className={styles.oddsWrapper}>
-        <p>{getWinner()}</p>
-        <p className={styles.oddsValue}>12.4</p>
-        <p className={styles.oddsLabel}> Punkte</p>
+        <p className={styles.oddsLabel}>
+          Richtige Tendenz:{" "}
+          <span className={styles.oddsValue}>
+            {getHeadToHeadPoints(match, homeGoals, awayGoals)}
+          </span>
+        </p>
+        <p className={styles.oddsLabel}>
+          Exaktes Ergebnis: <span className={styles.oddsValue}>0</span>
+        </p>
       </div>
     </Card>
   );
