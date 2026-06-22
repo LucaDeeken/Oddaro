@@ -1,11 +1,14 @@
 .button {
+  position: fixed;
+  bottom: 20px;
+  width: 200px;
+  left: calc(50% - 100px);
   transition: all 0.2s ease;
 }
 
 .saved {
   background: #3dff9a;
   color: #04130c;
-  transform: scale(1.03);
 }
 
 .saved:hover {

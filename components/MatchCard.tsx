@@ -1,7 +1,26 @@
+"use client";
 import { Card, NumberInput, Text } from "@mantine/core";
 import styles from "./MatchCard.module.css";
+import { useState } from "react";
 
 export default function MatchCard({ match }) {
+  const [homeGoals, setHomeGoals] = useState<number | null>(null);
+  const [awayGoals, setAwayGoals] = useState<number | null>(null);
+
+  function getWinner() {
+    if (homeGoals === null || awayGoals === null) return "";
+
+    if (homeGoals > awayGoals) {
+      return match.home_team;
+    }
+
+    if (awayGoals > homeGoals) {
+      return match.away_team;
+    }
+
+    return "DRAW";
+  }
+
   return (
     <Card
       shadow="sm"
@@ -28,6 +47,13 @@ export default function MatchCard({ match }) {
           min={0}
           max={9}
           placeholder="0"
+          onChange={(value) => {
+            if (typeof value === "number") {
+              setHomeGoals(value);
+            } else {
+              setHomeGoals(null);
+            }
+          }}
         />
         <span className={styles.spanBetweenGoals}>:</span>
         <NumberInput
@@ -41,11 +67,19 @@ export default function MatchCard({ match }) {
           min={0}
           max={9}
           placeholder="0"
+          onChange={(value) => {
+            if (typeof value === "number") {
+              setAwayGoals(value);
+            } else {
+              setAwayGoals(null);
+            }
+          }}
         />
       </div>
 
       {/* Odds Info */}
       <div className={styles.oddsWrapper}>
+        <p>{getWinner()}</p>
         <p className={styles.oddsValue}>12.4</p>
         <p className={styles.oddsLabel}> Punkte</p>
       </div>

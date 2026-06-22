@@ -18,7 +18,6 @@ export default function SaveButton() {
   return (
     <Button
       onClick={handleClick}
-      fullWidth
       size="md"
       color="red"
       className={`${styles.button} ${saved ? styles.saved : ""}`}
