@@ -19,8 +19,8 @@ export type Match = {
 
 export function getHeadToHeadPoints(
   match: Match,
-  homeGoals: number,
-  awayGoals: number,
+  homeGoals: number | null,
+  awayGoals: number | null,
 ) {
   if (homeGoals === null || awayGoals === null) return 0;
 
