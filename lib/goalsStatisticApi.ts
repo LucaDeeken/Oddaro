@@ -1,12 +1,3 @@
-export type OddsMatch = {
-  id: string;
-  sport_key: string;
-  sport_title: string;
-  commence_time: string;
-  home_team: string;
-  away_team: string;
-};
-
 export async function getSeasonStats() {
   const apiKey = process.env.SEASON_API_KEY;
 
@@ -24,7 +15,7 @@ export async function getSeasonStats() {
   });
 
   if (!res.ok) {
-    throw new Error("Odds API Fehler");
+    throw new Error("api football Fehler");
   }
   return res.json();
 }
