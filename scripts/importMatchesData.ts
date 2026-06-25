@@ -5,9 +5,13 @@ import {
   Season,
   SeasonJson,
 } from "@/types/importMatchesDataType";
+import { runImport } from "@/lib/db/runImport";
 import { loadEnvConfig } from "@next/env";
 loadEnvConfig(process.cwd());
 
+//Nutzt den API Call, um die gesamte Saison zu fetchen und baut aus ihr die drei Objekte League, Season und Matches zusammen.
+//Hier werden nun dem Vorbild der Datenbank entsprechend die benötigten Felder gefüllt.
+//Der Returnwert entspricht allen benötigten Feldern in einer gesammelten JSON.
 async function buildJsonFromSeasonStats(): Promise<SeasonJson> {
   const data = await getSeasonStats();
 
@@ -40,9 +44,14 @@ async function buildJsonFromSeasonStats(): Promise<SeasonJson> {
     season: season,
     matches: matchesFiltered,
   };
-  console.log(finalJson);
 
   return finalJson;
 }
 
-buildJsonFromSeasonStats().catch(console.error);
+async function main() {
+  const finalJson = await buildJsonFromSeasonStats();
+
+  await runImport(finalJson);
+}
+
+main().catch(console.error);
