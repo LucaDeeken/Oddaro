@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Predictions } from "@/types/predicitons";
+import { Predictions } from "@/types/predicitonsType";
 
 import styles from "./TippingDashboard.module.css";
 import SaveButton from "@/components/SaveButton";
