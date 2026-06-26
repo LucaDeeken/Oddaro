@@ -1,4 +1,4 @@
-import { getWorldCupOdds } from "@/lib/oddsApi";
+import { getWorldCupOdds } from "@/lib/api/oddsApi";
 
 import styles from "./page.module.css";
 import TippingDashboard from "@/components/TippingDashboard";

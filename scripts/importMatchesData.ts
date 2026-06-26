@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
-import { getSeasonStats } from "@/lib/matchesApi";
+import { getSeasonStats } from "@/lib/api/matchesApi";
 import {
   leagueCountryMap,
   leagueNameMap,
