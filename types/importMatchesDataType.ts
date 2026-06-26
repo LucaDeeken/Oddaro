@@ -10,6 +10,7 @@ export type Match = {
 export type League = {
   name: string;
   type: string;
+  country: string;
 };
 
 export type Season = {

@@ -1,4 +1,5 @@
 import { OddsMatch } from "@/types/oddsApiType";
+import "dotenv/config";
 
 export async function getWorldCupOdds(): Promise<OddsMatch[]> {
   const apiKey = process.env.ODDS_API_KEY;

@@ -1,4 +1,6 @@
+import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
 import { getSeasonStats } from "@/lib/matchesApi";
+import { leagueCountryMap } from "@/lib/mapping/countryNameBuilder";
 import {
   Match,
   League,
@@ -6,8 +8,7 @@ import {
   SeasonJson,
 } from "@/types/importMatchesDataType";
 import { runImport } from "@/lib/db/runImport";
-import { loadEnvConfig } from "@next/env";
-loadEnvConfig(process.cwd());
+import "dotenv/config";
 
 //Nutzt den API Call, um die gesamte Saison zu fetchen und baut aus ihr die drei Objekte League, Season und Matches zusammen.
 //Hier werden nun dem Vorbild der Datenbank entsprechend die benötigten Felder gefüllt.
@@ -15,9 +16,12 @@ loadEnvConfig(process.cwd());
 async function buildJsonFromSeasonStats(): Promise<SeasonJson> {
   const data = await getSeasonStats();
 
+  const leagueName = data?.competition?.name ?? "";
+
   const league: League = {
-    name: data?.competition?.name ?? "",
+    name: leagueName,
     type: data?.competition?.type ?? "",
+    country: leagueCountryMap[leagueName] ?? "",
   };
 
   const season: Season = {
@@ -48,10 +52,10 @@ async function buildJsonFromSeasonStats(): Promise<SeasonJson> {
   return finalJson;
 }
 
-async function main() {
+async function fetchBuildAndSeed() {
   const finalJson = await buildJsonFromSeasonStats();
 
-  await runImport(finalJson);
+  await runImport(finalJson, supabaseAdmin);
 }
 
-main().catch(console.error);
+fetchBuildAndSeed().catch(console.error);

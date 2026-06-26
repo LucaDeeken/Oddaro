@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export async function getSeasonStats() {
   const apiKey = process.env.SEASON_API_KEY;
 
