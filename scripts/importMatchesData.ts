@@ -1,6 +1,10 @@
 import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
 import { getSeasonStats } from "@/lib/matchesApi";
-import { leagueCountryMap } from "@/lib/mapping/countryNameBuilder";
+import {
+  leagueCountryMap,
+  leagueNameMap,
+  leagueTypeMap,
+} from "@/lib/mapping/countryNameBuilder";
 import {
   Match,
   League,
@@ -16,29 +20,38 @@ import "dotenv/config";
 async function buildJsonFromSeasonStats(): Promise<SeasonJson> {
   const data = await getSeasonStats();
 
-  const leagueName = data?.competition?.name ?? "";
+  const leagueNameShortcut = data[0]?.leagueShortcut ?? "";
+
+  //LEAGUE DATA
 
   const league: League = {
-    name: leagueName,
-    type: data?.competition?.type ?? "",
-    country: leagueCountryMap[leagueName] ?? "",
+    name: leagueNameMap[leagueNameShortcut] ?? "",
+    type: leagueTypeMap[leagueNameShortcut] ?? "",
+    country: leagueCountryMap[leagueNameShortcut] ?? "",
   };
+
+  //SEASON DATA
+  const leagueAndSeasonVar = data[0]?.leagueName ?? "";
+  const seasonYear = leagueAndSeasonVar.match(/\d{4}\/\d{4}/)?.[0] ?? "";
 
   const season: Season = {
-    year: data?.filters?.season ?? "",
+    year: seasonYear,
   };
 
+  //MATCH DATA
   const matchesFiltered: Match[] = [];
 
-  const matches = data?.matches ?? [];
+  const matches = data ?? [];
   for (let i = 0; i < matches.length; i++) {
+    const result = matches[i].matchResults?.[1];
     const singleMatch: Match = {
-      matchday: matches[i].matchday,
-      home_team: matches[i].homeTeam.name,
-      away_team: matches[i].awayTeam.name,
-      home_goals: matches[i].score.fullTime.home,
-      away_goals: matches[i].score.fullTime.away,
-      kickoff: matches[i].utcDate,
+      matchday: matches[i].group?.groupName ?? "",
+      home_team: matches[i].team1?.teamName ?? "",
+      away_team: matches[i].team2?.teamName ?? "",
+      home_goals: result?.pointsTeam1 ?? null,
+      away_goals: result?.pointsTeam2 ?? null,
+      kickoff: matches[i].matchDateTimeUTC ?? null,
+      is_finished: matches[i].matchIsFinished ?? null,
     };
     matchesFiltered.push(singleMatch);
   }

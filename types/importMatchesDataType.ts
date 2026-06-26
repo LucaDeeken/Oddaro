@@ -1,10 +1,11 @@
 export type Match = {
-  matchday: number;
+  matchday: string;
   home_team: string;
   away_team: string;
-  home_goals: number;
-  away_goals: number;
-  kickoff: string;
+  home_goals: number | null;
+  away_goals: number | null;
+  kickoff: string | null;
+  is_finished: boolean | null;
 };
 
 export type League = {

@@ -1,23 +1,12 @@
-import "dotenv/config";
-
 export async function getSeasonStats() {
-  const apiKey = process.env.SEASON_API_KEY;
-
-  if (!apiKey) {
-    throw new Error("SEASON_API_KEY fehlt in .env.local");
-  }
-
-  const url = `https://api.football-data.org//v4/competitions/BL1/matches`;
+  const url = `https://api.openligadb.de/getmatchdata/bl2/2025/`;
 
   const res = await fetch(url, {
-    headers: {
-      "X-Auth-Token": apiKey,
-    },
     next: { revalidate: 300 }, // 5 Minuten Cache
   });
 
   if (!res.ok) {
-    throw new Error("api football Fehler");
+    throw new Error("OpenLigaDB API Fehler");
   }
   return res.json();
 }
