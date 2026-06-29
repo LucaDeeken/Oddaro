@@ -14,5 +14,25 @@ export function calculateTeamStats(matches) {
         awayGoalsAgainst: 0,
       };
     }
+
+    if (!allTeams[matches[i].away_team]) {
+      allTeams[matches[i].away_team] = {
+        homeGames: 0,
+        awayGames: 0,
+        homeGoalsFor: 0,
+        homeGoalsAgainst: 0,
+        awayGoalsFor: 0,
+        awayGoalsAgainst: 0,
+      };
+    }
+
+    allTeams[matches[i].home_team].homeGames += 1;
+    allTeams[matches[i].home_team].homeGoalsFor += matches[i].home_goals;
+    allTeams[matches[i].home_team].homeGoalsAgainst += matches[i].away_goals;
+
+    allTeams[matches[i].away_team].awayGames += 1;
+    allTeams[matches[i].away_team].awayGoalsFor += matches[i].away_goals;
+    allTeams[matches[i].away_team].awayGoalsAgainst += matches[i].home_goals;
   }
+  return allTeams;
 }
