@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "importMatches": "npx tsx scripts/importMatchesData.ts",
-    "getTeamGoalStatsAndUpsertToDB": "npx tsx scripts/getTeamGoalStats.ts"
+    "getTeamGoalStatsAndUpsertToDB": "npx tsx scripts/getTeamGoalStats.ts",
+    "upsertTeams": "npx tsx scripts/upsertTeamsFromAllMatches.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

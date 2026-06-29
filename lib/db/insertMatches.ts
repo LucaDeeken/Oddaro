@@ -1,8 +1,9 @@
 import { SupabaseClient } from "@supabase/supabase-js";
+import { Match } from "@/types/importMatchesDataType";
 
 export async function insertMatches(
   supabase: SupabaseClient,
-  matches,
+  matches: Match[],
   seasonId,
 ) {
   const payload = matches.map((match) => ({

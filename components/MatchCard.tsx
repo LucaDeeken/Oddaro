@@ -2,7 +2,7 @@
 import { Card, NumberInput } from "@mantine/core";
 import styles from "./MatchCard.module.css";
 import { useState, useEffect } from "react";
-import { getHeadToHeadPoints } from "@/lib/calculations/pointsCalculator";
+import { getHeadToHeadPoints } from "@/lib/calculations/calculateHeadToHeadPoints";
 
 export default function MatchCard({ match, onPredictionChange }) {
   const [homeGoals, setHomeGoals] = useState<number | null>(null);
