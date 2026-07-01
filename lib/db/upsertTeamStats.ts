@@ -5,13 +5,13 @@ export async function upsertTeamStats(
   seasonId: number,
   allTeams,
 ) {
-  for (const teamName in allTeams) {
-    const stats = allTeams[teamName];
+  for (const team_id in allTeams) {
+    const stats = allTeams[team_id];
 
     const { error } = await supabase.from("Team_Season_Stats").upsert(
       {
         season_id: seasonId,
-        team_name: teamName,
+        team_id: Number(team_id),
         home_games: stats.homeGames,
         away_games: stats.awayGames,
         home_goals_for: stats.homeGoalsFor,
@@ -20,7 +20,7 @@ export async function upsertTeamStats(
         away_goals_against: stats.awayGoalsAgainst,
       },
       {
-        onConflict: "season_id,team_name",
+        onConflict: "season_id,team_id",
       },
     );
 

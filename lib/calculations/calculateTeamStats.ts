@@ -14,21 +14,21 @@ export function calculateTeamStats(matches) {
   const allTeams: Record<string, TeamStats> = {};
 
   for (let i = 0; i < matches.length; i++) {
-    if (!allTeams[matches[i].home_team]) {
-      allTeams[matches[i].home_team] = createNewTeam();
+    if (!allTeams[matches[i].home_team_id]) {
+      allTeams[matches[i].home_team_id] = createNewTeam();
     }
 
-    if (!allTeams[matches[i].away_team]) {
-      allTeams[matches[i].away_team] = createNewTeam();
+    if (!allTeams[matches[i].away_team_id]) {
+      allTeams[matches[i].away_team_id] = createNewTeam();
     }
 
-    allTeams[matches[i].home_team].homeGames += 1;
-    allTeams[matches[i].home_team].homeGoalsFor += matches[i].home_goals;
-    allTeams[matches[i].home_team].homeGoalsAgainst += matches[i].away_goals;
+    allTeams[matches[i].home_team_id].homeGames += 1;
+    allTeams[matches[i].home_team_id].homeGoalsFor += matches[i].home_goals;
+    allTeams[matches[i].home_team_id].homeGoalsAgainst += matches[i].away_goals;
 
-    allTeams[matches[i].away_team].awayGames += 1;
-    allTeams[matches[i].away_team].awayGoalsFor += matches[i].away_goals;
-    allTeams[matches[i].away_team].awayGoalsAgainst += matches[i].home_goals;
+    allTeams[matches[i].away_team_id].awayGames += 1;
+    allTeams[matches[i].away_team_id].awayGoalsFor += matches[i].away_goals;
+    allTeams[matches[i].away_team_id].awayGoalsAgainst += matches[i].home_goals;
   }
   return allTeams;
 }

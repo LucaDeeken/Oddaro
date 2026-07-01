@@ -1,5 +1,5 @@
 {
-  "name": "goal",
+  "name": "Oddaro",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "importMatches": "npx tsx scripts/importMatchesData.ts",
-    "getTeamGoalStatsAndUpsertToDB": "npx tsx scripts/getTeamGoalStats.ts",
+    "getTeamGoalStatsAndUpsertToDB": "npx tsx scripts/getTeamGoalStatsAndUpsertToDB.ts",
     "upsertTeams": "npx tsx scripts/upsertTeamsFromAllMatches.ts"
   },
   "dependencies": {
