@@ -10,7 +10,8 @@
     "importMatches": "npx tsx scripts/importMatchesData.ts",
     "getTeamGoalStatsAndUpsertToDB": "npx tsx scripts/getTeamGoalStatsAndUpsertToDB.ts",
     "upsertTeams": "npx tsx scripts/upsertTeamsFromAllMatches.ts",
-    "getExactScoreOdds": "npx tsx scripts/getExactScoreOdds.ts"
+    "getExactScoreOdds": "npx tsx scripts/getExactScoreOdds.ts",
+    "importH2HIntoMatches": "npx tsx scripts/importHeadToHeadIntoMatchesDB.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

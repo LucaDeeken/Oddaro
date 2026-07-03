@@ -32,7 +32,7 @@ async function buildJsonFromSeasonStats(): Promise<SeasonJson> {
 
   //SEASON DATA
   const leagueAndSeasonVar = data[0]?.leagueName ?? "";
-  const seasonYear = leagueAndSeasonVar.match(/\d{4}\/\d{4}/)?.[0] ?? "";
+  const seasonYear = leagueAndSeasonVar.match(/\d{4}(?:\/\d{4})?/)?.[0] ?? "";
 
   const season: Season = {
     year: seasonYear,

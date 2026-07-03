@@ -29,6 +29,6 @@ export function getHeadToHeadPoints(
   }
 
   if (chosenPrediction !== undefined) {
-    return Math.round(chosenPrediction.price * 3);
+    return chosenPrediction.price;
   }
 }

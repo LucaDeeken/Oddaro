@@ -1,11 +1,9 @@
-import { getWorldCupOdds } from "@/lib/api/oddsApi";
-
-import styles from "./page.module.css";
+import { getOddsApi } from "@/lib/api/oddsApi";
 import TippingDashboard from "@/components/TippingDashboard";
 
 export default async function Home() {
-  const matchesCup = await getWorldCupOdds();
-
+  const matchesCup = await getOddsApi();
+  console.log(matchesCup);
   return (
     <>
       <TippingDashboard matchesCup={matchesCup}></TippingDashboard>
