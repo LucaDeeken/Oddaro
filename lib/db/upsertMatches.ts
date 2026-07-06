@@ -1,7 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Match } from "@/types/importMatchesDataType";
 
-export async function insertMatches(
+export async function upsertMatches(
   supabase: SupabaseClient,
   matches: Match[],
   seasonId: number,
@@ -18,14 +18,18 @@ export async function insertMatches(
     is_finished: match.is_finished,
   }));
 
-  const { data, error } = await supabase.from("Matches").insert(payload);
+  const { data, error } = await supabase
+    .from("Matches")
+    .upsert(payload, {
+      onConflict: "season_id,home_team_id,away_team_id,kickoff",
+    })
+    .select();
 
   if (error) {
-    console.error("Supabase insert error while using 'insertMatches':", error);
+    console.error("Supabase upsert error while using 'upsertMatches':", error);
     throw error;
-  } else {
-    console.log("Match or Matches successfully inserted");
   }
 
+  console.log("Match or Matches successfully upserted");
   return data;
 }

@@ -9,7 +9,7 @@ import "dotenv/config";
 export async function init() {
   try {
     const leagueId = 1;
-    const seasonYear = "2026";
+    const seasonYear = "2025/2026";
 
     const seasonId = await getSeasonIdByYear(
       supabaseAdmin,

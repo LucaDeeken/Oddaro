@@ -3,7 +3,11 @@ import { calculateExpectedGoals } from "@/lib/calculations/calculateExpectedGoal
 import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
 import { calculateScoreProbabilities } from "@/lib/calculations/calculateScoreProbabilities";
 
-async function init(seasonid: number, homeTeamId: number, awayTeamId: number) {
+export async function init(
+  seasonid: number,
+  homeTeamId: number,
+  awayTeamId: number,
+) {
   const teamsSeasonStatsForMatch = await getTeamSeasonStatsForMatch(
     supabaseAdmin,
     seasonid,
@@ -15,11 +19,10 @@ async function init(seasonid: number, homeTeamId: number, awayTeamId: number) {
     teamsSeasonStatsForMatch.awayStats,
   );
 
-  const scores = calculateScoreProbabilities(
+  return calculateScoreProbabilities(
     expectedGoalsStatsForMatch.expectedHomeGoals,
     expectedGoalsStatsForMatch.expectedAwayGoals,
   );
-  console.log(scores);
 }
 
-init(1, 37, 26);
+//init(1, 37, 26);
