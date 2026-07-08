@@ -2,7 +2,6 @@
 import { Card, NumberInput } from "@mantine/core";
 import styles from "./MatchCard.module.css";
 import { useState, useEffect } from "react";
-import { init } from "@/scripts/getExactScoreOdds";
 
 export default function MatchCard({ match, onPredictionChange }) {
   const [homeGoals, setHomeGoals] = useState<number | null>(null);
@@ -22,27 +21,40 @@ export default function MatchCard({ match, onPredictionChange }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            seasonId: match.season_id,
+            seasonId: 1,
             homeTeamId: match.home_team_id,
             awayTeamId: match.away_team_id,
           }),
         });
 
-        const data = await res.json();
+        const text = await res.text();
+
+        let data = null;
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = text;
+        }
 
         if (!res.ok) {
-          console.error("API Fehler:", data);
+          console.error("API Fehler für Match:", {
+            matchId: match.id,
+            seasonId: 1,
+            homeTeamId: match.home_team_id,
+            awayTeamId: match.away_team_id,
+            response: data,
+          });
           return;
         }
 
-        console.log(data);
+        console.log("Score stats:", data);
       } catch (error) {
         console.error("Fetch error:", error);
       }
     }
 
     loadScoreStats();
-  }, [match.season_id, match.home_team_id, match.away_team_id]);
+  }, [match.home_team_id, match.away_team_id, match.id]);
 
   return (
     <Card
