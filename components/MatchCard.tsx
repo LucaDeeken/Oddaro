@@ -21,9 +21,10 @@ export default function MatchCard({ match, onPredictionChange }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            seasonId: 1,
+            seasonId: match.season_id,
             homeTeamId: match.home_team_id,
             awayTeamId: match.away_team_id,
+            kickoff: match.kickoff,
           }),
         });
 
@@ -39,9 +40,10 @@ export default function MatchCard({ match, onPredictionChange }) {
         if (!res.ok) {
           console.error("API Fehler für Match:", {
             matchId: match.id,
-            seasonId: 1,
+            seasonId: match.season_id,
             homeTeamId: match.home_team_id,
             awayTeamId: match.away_team_id,
+            kickoff: match.kickoff,
             response: data,
           });
           return;
@@ -54,7 +56,13 @@ export default function MatchCard({ match, onPredictionChange }) {
     }
 
     loadScoreStats();
-  }, [match.home_team_id, match.away_team_id, match.id]);
+  }, [
+    match.home_team_id,
+    match.away_team_id,
+    match.id,
+    match.kickoff,
+    match.season_id,
+  ]);
 
   return (
     <Card

@@ -1,46 +1,46 @@
-import { getRecentTeamStatsForMatch } from "@/lib/db/getRecentTeamStatsForMatch";
+//import { getRecentTeamStatsForMatch } from "@/lib/db/getRecentTeamStatsForMatch";
 import { calculateExpectedGoals } from "@/lib/calculations/calculateExpectedGoals";
 import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
 import { calculateScoreProbabilities } from "@/lib/calculations/calculateScoreProbabilities";
-import { getRecentHomeMatches } from "@/lib/db/getRecentHomeMatches";
+import { getRecentMatchesBySide } from "@/lib/db/getRecentMatchStats";
+import {
+  buildHomeStats,
+  buildAwayStats,
+} from "@/lib/calculations/calculateTeamStats";
 
-export async function init(
+export async function initGetExactScoreOddsScript(
   matchDate: string,
-  leagueId: number,
+  seasonId: number,
   homeTeamId: number,
   awayTeamId: number,
 ) {
-  const teamsStatsForMatch = await getRecentTeamStatsForMatch(supabaseAdmin, {
-    matchDate,
-    leagueId,
+  const homeTeamStats = await getRecentMatchesBySide(
+    supabaseAdmin,
     homeTeamId,
-    awayTeamId,
-    sampleSize: 8,
-    minLeagueSample: 4,
-  });
-
-  const expectedGoalsStatsForMatch = calculateExpectedGoals(
-    teamsStatsForMatch.homeStats,
-    teamsStatsForMatch.awayStats,
+    matchDate,
+    seasonId,
+    "home",
   );
 
+  const awayTeamStats = await getRecentMatchesBySide(
+    supabaseAdmin,
+    awayTeamId,
+    matchDate,
+    seasonId,
+    "away",
+  );
+
+  const homeStats = buildHomeStats(homeTeamStats);
+  const awayStats = buildAwayStats(awayTeamStats);
+
+  const expectedGoalsStatsForMatch = calculateExpectedGoals(
+    homeStats,
+    awayStats,
+  );
+
+  console.log(expectedGoalsStatsForMatch);
   return calculateScoreProbabilities(
     expectedGoalsStatsForMatch.expectedHomeGoals,
     expectedGoalsStatsForMatch.expectedAwayGoals,
   );
 }
-
-//init(1, 37, 26);
-
-async function testGetRecentHomeMatches() {
-  const test = await getRecentHomeMatches(
-    supabaseAdmin,
-    1,
-    "2026-08-29 13:30:00+00",
-    1,
-  );
-
-  console.log(test);
-}
-
-testGetRecentHomeMatches().catch(console.error);
