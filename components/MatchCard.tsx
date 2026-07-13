@@ -6,11 +6,20 @@ import { useState, useEffect } from "react";
 export default function MatchCard({ match, onPredictionChange }) {
   const [homeGoals, setHomeGoals] = useState<number | null>(null);
   const [awayGoals, setAwayGoals] = useState<number | null>(null);
+  const [scoreStats, setScoreStats] = useState<ScoreStat[]>([]);
 
   console.log(match);
   useEffect(() => {
     onPredictionChange(match, homeGoals, awayGoals);
   }, [homeGoals, awayGoals]);
+
+  type ScoreStat = {
+    score: string;
+    home_goals: number;
+    away_goals: number;
+    probability: number;
+    odd: number;
+  };
 
   useEffect(() => {
     async function loadScoreStats() {
@@ -48,7 +57,7 @@ export default function MatchCard({ match, onPredictionChange }) {
           });
           return;
         }
-
+        setScoreStats(data);
         console.log("Score stats:", data);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -64,6 +73,13 @@ export default function MatchCard({ match, onPredictionChange }) {
     match.season_id,
   ]);
 
+  const exactScore =
+    homeGoals == null || awayGoals == null ? null : `${homeGoals}:${awayGoals}`;
+
+  const exactScoreData =
+    exactScore == null
+      ? null
+      : scoreStats.find((item) => item.score === exactScore);
   return (
     <Card
       shadow="sm"
@@ -134,7 +150,9 @@ export default function MatchCard({ match, onPredictionChange }) {
         <p className={styles.oddsLabel}>
           Exaktes Ergebnis:{" "}
           <span className={styles.oddsValue}>
-            {homeGoals == null || awayGoals == null ? "-" : "huba"}
+            {homeGoals == null || awayGoals == null
+              ? "-"
+              : (exactScoreData?.odd ?? "-")}
           </span>
         </p>
       </div>
