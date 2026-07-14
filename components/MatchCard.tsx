@@ -152,7 +152,9 @@ export default function MatchCard({ match, onPredictionChange }) {
           <span className={styles.oddsValue}>
             {homeGoals == null || awayGoals == null
               ? "-"
-              : (exactScoreData?.odd ?? "-")}
+              : exactScoreData?.odd == null
+                ? "-"
+                : Math.round(exactScoreData.odd / 2)}
           </span>
         </p>
       </div>

@@ -7,6 +7,7 @@ import {
   buildHomeStats,
   buildAwayStats,
 } from "@/lib/calculations/calculateTeamStats";
+import { getTeam } from "@/lib/db/getTeam";
 
 export async function initGetExactScoreOddsScript(
   matchDate: string,
@@ -37,6 +38,19 @@ export async function initGetExactScoreOddsScript(
     homeStats,
     awayStats,
   );
+
+  const homeTeam = await getTeam(supabaseAdmin, homeTeamId);
+  const awayTeam = await getTeam(supabaseAdmin, awayTeamId);
+  console.log(homeTeam);
+  console.log(awayTeam);
+  if (homeTeam.promoted) {
+    expectedGoalsStatsForMatch.expectedHomeGoals *= 0.5;
+    expectedGoalsStatsForMatch.expectedAwayGoals *= 1.5;
+  }
+  if (awayTeam.promoted) {
+    expectedGoalsStatsForMatch.expectedHomeGoals *= 1.5;
+    expectedGoalsStatsForMatch.expectedAwayGoals *= 0.5;
+  }
 
   console.log(expectedGoalsStatsForMatch);
   return calculateScoreProbabilities(
