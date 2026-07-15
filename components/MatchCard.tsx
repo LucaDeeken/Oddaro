@@ -34,9 +34,6 @@ export default function MatchCard({ match, onPredictionChange }) {
             homeTeamId: match?.home_team_id,
             awayTeamId: match?.away_team_id,
             kickoff: match?.kickoff,
-            homeOdd: match?.home_h2h_odd,
-            awayOdd: match?.away_h2h_odd,
-            drawOdd: match?.draw_h2h_odd,
           }),
         });
 
@@ -88,7 +85,7 @@ export default function MatchCard({ match, onPredictionChange }) {
       : scoreStats.find((item) => item.score === exactScore);
 
   let points = exactScoreData?.points;
-  points = Math.round(points / 2);
+  points = Math.round(points / 5);
   const homeWin = homeGoals! > awayGoals!;
   const draw = homeGoals === awayGoals;
 
@@ -168,10 +165,10 @@ export default function MatchCard({ match, onPredictionChange }) {
               {homeGoals == null || awayGoals == null
                 ? "-"
                 : homeGoals > awayGoals
-                  ? (match?.home_h2h_odd ?? "-")
+                  ? Math.round((match?.home_h2h_odd ?? 0) * 2)
                   : homeGoals < awayGoals
-                    ? (match?.away_h2h_odd ?? "-")
-                    : (match?.draw_h2h_odd ?? "-")}
+                    ? Math.round((match?.away_h2h_odd ?? 0) * 2)
+                    : Math.round((match?.draw_h2h_odd ?? 0) * 2)}
             </span>
           </span>
         </p>

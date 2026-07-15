@@ -3,24 +3,13 @@ import { initGetExactScoreOddsScript } from "@/scripts/getExactScoreOdds";
 
 export async function POST(req: Request) {
   try {
-    const {
-      seasonId,
-      homeTeamId,
-      awayTeamId,
-      kickoff,
-      homeOdd,
-      awayOdd,
-      drawOdd,
-    } = await req.json();
+    const { seasonId, homeTeamId, awayTeamId, kickoff } = await req.json();
 
     const result = await initGetExactScoreOddsScript(
       kickoff,
       seasonId,
       homeTeamId,
       awayTeamId,
-      homeOdd,
-      awayOdd,
-      drawOdd,
     );
 
     return NextResponse.json(result);
