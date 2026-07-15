@@ -30,10 +30,13 @@ export default function MatchCard({ match, onPredictionChange }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            seasonId: match.season_id,
-            homeTeamId: match.home_team_id,
-            awayTeamId: match.away_team_id,
-            kickoff: match.kickoff,
+            seasonId: match?.season_id,
+            homeTeamId: match?.home_team_id,
+            awayTeamId: match?.away_team_id,
+            kickoff: match?.kickoff,
+            homeOdd: match?.home_h2h_odd,
+            awayOdd: match?.away_h2h_odd,
+            drawOdd: match?.draw_h2h_odd,
           }),
         });
 
@@ -71,6 +74,9 @@ export default function MatchCard({ match, onPredictionChange }) {
     match.id,
     match.kickoff,
     match.season_id,
+    match.home_h2h_odd,
+    match.away_h2h_odd,
+    match.draw_h2h_odd,
   ]);
 
   const exactScore =
@@ -80,6 +86,8 @@ export default function MatchCard({ match, onPredictionChange }) {
     exactScore == null
       ? null
       : scoreStats.find((item) => item.score === exactScore);
+
+  console.log(scoreStats);
   return (
     <Card
       shadow="sm"
@@ -154,7 +162,7 @@ export default function MatchCard({ match, onPredictionChange }) {
               ? "-"
               : exactScoreData?.odd == null
                 ? "-"
-                : Math.round(exactScoreData.odd / 2)}
+                : exactScoreData.odd}
           </span>
         </p>
       </div>

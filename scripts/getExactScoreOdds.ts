@@ -7,6 +7,7 @@ import {
   buildHomeStats,
   buildAwayStats,
 } from "@/lib/calculations/calculateTeamStats";
+import { adjustExpectedGoalsByH2H } from "@/lib/calculations/adjustExpectedGoalsViaMarketOdds";
 import { getTeam } from "@/lib/db/getTeam";
 
 export async function initGetExactScoreOddsScript(
@@ -14,6 +15,9 @@ export async function initGetExactScoreOddsScript(
   seasonId: number,
   homeTeamId: number,
   awayTeamId: number,
+  homeOdd: number,
+  awayOdd: number,
+  drawOdd: number,
 ) {
   const homeTeamStats = await getRecentMatchesBySide(
     supabaseAdmin,
@@ -51,6 +55,16 @@ export async function initGetExactScoreOddsScript(
     expectedGoalsStatsForMatch.expectedHomeGoals *= 1.5;
     expectedGoalsStatsForMatch.expectedAwayGoals *= 0.5;
   }
+
+  // const adjustedExpectedGoals = adjustExpectedGoalsByH2H({
+  //   expectedHomeGoals: expectedGoalsStatsForMatch.expectedHomeGoals,
+
+  //   expectedAwayGoals: expectedGoalsStatsForMatch.expectedAwayGoals,
+
+  //   homeOdd,
+  //   drawOdd,
+  //   awayOdd,
+  // });
 
   console.log(expectedGoalsStatsForMatch);
   return calculateScoreProbabilities(
