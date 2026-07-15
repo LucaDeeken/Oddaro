@@ -162,7 +162,7 @@ export default function MatchCard({ match, onPredictionChange }) {
               ? "-"
               : exactScoreData?.odd == null
                 ? "-"
-                : exactScoreData.odd}
+                : Math.round(exactScoreData.odd / 2)}
           </span>
         </p>
       </div>
