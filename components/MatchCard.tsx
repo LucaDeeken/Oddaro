@@ -85,7 +85,7 @@ export default function MatchCard({ match, onPredictionChange }) {
       : scoreStats.find((item) => item.score === exactScore);
 
   let points = exactScoreData?.points;
-  points = Math.round(points / 5);
+
   const homeWin = homeGoals! > awayGoals!;
   const draw = homeGoals === awayGoals;
 
