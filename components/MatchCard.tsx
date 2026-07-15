@@ -8,7 +8,6 @@ export default function MatchCard({ match, onPredictionChange }) {
   const [awayGoals, setAwayGoals] = useState<number | null>(null);
   const [scoreStats, setScoreStats] = useState<ScoreStat[]>([]);
 
-  console.log(match);
   useEffect(() => {
     onPredictionChange(match, homeGoals, awayGoals);
   }, [homeGoals, awayGoals]);
@@ -19,6 +18,7 @@ export default function MatchCard({ match, onPredictionChange }) {
     away_goals: number;
     probability: number;
     odd: number;
+    points: number;
   };
 
   useEffect(() => {
@@ -87,7 +87,27 @@ export default function MatchCard({ match, onPredictionChange }) {
       ? null
       : scoreStats.find((item) => item.score === exactScore);
 
-  console.log(scoreStats);
+  let points = exactScoreData?.points;
+  points = Math.round(points / 2);
+  const homeWin = homeGoals! > awayGoals!;
+  const draw = homeGoals === awayGoals;
+
+  if (draw) {
+    points += Math.floor(match.draw_h2h_odd);
+  } else if (homeWin) {
+    // Heim gewinnt
+    if (match.home_h2h_odd > match.away_h2h_odd) {
+      // Heim war Außenseiter
+      points += Math.floor(match.home_h2h_odd);
+    }
+  } else {
+    // Auswärts gewinnt
+    if (match.away_h2h_odd > match.home_h2h_odd) {
+      // Auswärts war Außenseiter
+      points += Math.floor(match.away_h2h_odd);
+    }
+  }
+
   return (
     <Card
       shadow="sm"
@@ -162,7 +182,7 @@ export default function MatchCard({ match, onPredictionChange }) {
               ? "-"
               : exactScoreData?.odd == null
                 ? "-"
-                : Math.round(exactScoreData.odd / 2)}
+                : points}
           </span>
         </p>
       </div>

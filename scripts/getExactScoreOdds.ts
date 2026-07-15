@@ -45,8 +45,7 @@ export async function initGetExactScoreOddsScript(
 
   const homeTeam = await getTeam(supabaseAdmin, homeTeamId);
   const awayTeam = await getTeam(supabaseAdmin, awayTeamId);
-  console.log(homeTeam);
-  console.log(awayTeam);
+
   if (homeTeam.promoted) {
     expectedGoalsStatsForMatch.expectedHomeGoals *= 0.5;
     expectedGoalsStatsForMatch.expectedAwayGoals *= 1.5;
@@ -66,9 +65,11 @@ export async function initGetExactScoreOddsScript(
   //   awayOdd,
   // });
 
-  console.log(expectedGoalsStatsForMatch);
-  return calculateScoreProbabilities(
+  //console.log(expectedGoalsStatsForMatch);
+  const scores = calculateScoreProbabilities(
     expectedGoalsStatsForMatch.expectedHomeGoals,
     expectedGoalsStatsForMatch.expectedAwayGoals,
   );
+
+  return scores;
 }

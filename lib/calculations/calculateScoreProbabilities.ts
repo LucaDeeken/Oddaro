@@ -20,7 +20,7 @@ export function calculateScoreProbabilities(
         away_goals: away,
         probability,
         odd: Number(odd.toFixed(2)),
-        points: Number((odd * 10).toFixed(1)),
+        points: Math.max(1, Math.round(Math.log(odd) * 20)),
       });
     }
   }
