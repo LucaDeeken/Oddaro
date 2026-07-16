@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-
+    console.log("geile Sache diggi" + result);
     return NextResponse.json({
       success: true,
       data: result.data,
