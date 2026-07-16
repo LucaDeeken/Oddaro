@@ -1,0 +1,18 @@
+.section {
+  position: fixed;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  grid-template-columns: 210px 210px 210px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  height: 70px;
+  width: 100%;
+}

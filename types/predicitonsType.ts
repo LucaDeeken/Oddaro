@@ -5,6 +5,8 @@ export type Prediction = {
   commenceTime: string;
   homeGoals: number | null;
   awayGoals: number | null;
+  h2hPoints: number | null;
+  exactPoints: number | null;
 };
 
 export type Predictions = Record<string, Prediction>;

@@ -8,10 +8,6 @@ export default function MatchCard({ match, onPredictionChange }) {
   const [awayGoals, setAwayGoals] = useState<number | null>(null);
   const [scoreStats, setScoreStats] = useState<ScoreStat[]>([]);
 
-  useEffect(() => {
-    onPredictionChange(match, homeGoals, awayGoals);
-  }, [homeGoals, awayGoals]);
-
   type ScoreStat = {
     score: string;
     home_goals: number;
@@ -84,27 +80,38 @@ export default function MatchCard({ match, onPredictionChange }) {
       ? null
       : scoreStats.find((item) => item.score === exactScore);
 
-  let points = exactScoreData?.points;
+  let points = exactScoreData?.points ?? 0;
 
-  const homeWin = homeGoals! > awayGoals!;
-  const draw = homeGoals === awayGoals;
+  const hasPrediction = homeGoals !== null && awayGoals !== null;
 
-  if (draw) {
-    points += Math.floor(match.draw_h2h_odd);
-  } else if (homeWin) {
-    // Heim gewinnt
-    if (match.home_h2h_odd > match.away_h2h_odd) {
-      // Heim war Außenseiter
-      points += Math.floor(match.home_h2h_odd);
-    }
-  } else {
-    // Auswärts gewinnt
-    if (match.away_h2h_odd > match.home_h2h_odd) {
-      // Auswärts war Außenseiter
-      points += Math.floor(match.away_h2h_odd);
+  if (hasPrediction) {
+    if (homeGoals === awayGoals) {
+      points += Math.floor(match.draw_h2h_odd);
+    } else if (homeGoals > awayGoals) {
+      // Heim gewinnt
+      if (match.home_h2h_odd > match.away_h2h_odd) {
+        points += Math.floor(match.home_h2h_odd);
+      }
+    } else {
+      // Auswärts gewinnt
+      if (match.away_h2h_odd > match.home_h2h_odd) {
+        points += Math.floor(match.away_h2h_odd);
+      }
     }
   }
 
+  const tendencyPoints =
+    homeGoals == null || awayGoals == null
+      ? null
+      : homeGoals > awayGoals
+        ? Math.round((match?.home_h2h_odd ?? 0) * 2)
+        : homeGoals < awayGoals
+          ? Math.round((match?.away_h2h_odd ?? 0) * 2)
+          : Math.round((match?.draw_h2h_odd ?? 0) * 2);
+
+  useEffect(() => {
+    onPredictionChange(match, homeGoals, awayGoals, tendencyPoints, points);
+  }, [homeGoals, awayGoals, tendencyPoints, points]);
   return (
     <Card
       shadow="sm"
@@ -160,21 +167,11 @@ export default function MatchCard({ match, onPredictionChange }) {
       <div className={styles.oddsWrapper}>
         <p className={styles.oddsLabel}>
           Richtige Tendenz:{" "}
-          <span className={styles.oddsValue}>
-            <span className={styles.oddsValue}>
-              {homeGoals == null || awayGoals == null
-                ? "-"
-                : homeGoals > awayGoals
-                  ? Math.round((match?.home_h2h_odd ?? 0) * 2)
-                  : homeGoals < awayGoals
-                    ? Math.round((match?.away_h2h_odd ?? 0) * 2)
-                    : Math.round((match?.draw_h2h_odd ?? 0) * 2)}
-            </span>
-          </span>
+          <span className={styles.oddsValue}>{tendencyPoints ?? "-"}</span>
         </p>
         <p className={styles.oddsLabel}>
           Exaktes Ergebnis:{" "}
-          <span className={styles.oddsValue}>
+          <span className={styles.oddsValueExact}>
             {homeGoals == null || awayGoals == null
               ? "-"
               : exactScoreData?.odd == null
