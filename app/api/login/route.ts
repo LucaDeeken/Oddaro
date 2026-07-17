@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { registerSchema } from "@/lib/schemas/registerSchema";
+import { loginSchema } from "@/lib/schemas/loginSchema";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const result = registerSchema.safeParse(body);
+    const result = loginSchema.safeParse(body);
 
     if (!result.success) {
       return NextResponse.json(
@@ -21,18 +21,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const { username, email, password } = result.data;
+    const { email, password } = result.data;
 
     const supabase = await createClient();
 
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
-      options: {
-        data: {
-          username,
-        },
-      },
     });
 
     if (error) {
@@ -41,18 +36,17 @@ export async function POST(req: Request) {
           error: error.message,
         },
         {
-          status: 400,
+          status: 401,
         },
       );
     }
-
+    console.log(data.session);
     return NextResponse.json({
       success: true,
-      message: "Registrierung erfolgreich",
       user: data.user,
     });
   } catch (error) {
-    console.error("REGISTER ERROR:", error);
+    console.error("Login Fehler:", error);
 
     return NextResponse.json(
       {
