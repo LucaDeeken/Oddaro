@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { registerSchema } from "@/lib/schemas/registerSchema";
-import { supabase } from "@/lib/db/supabase";
+import { supabase } from "@/lib/supabase/client";
 
 export async function POST(req: Request) {
   try {

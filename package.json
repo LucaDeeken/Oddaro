@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^5.4.0",
     "@mantine/core": "^9.3.0",
     "@mantine/hooks": "^9.3.0",
+    "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.108.2",
     "dotenv": "^17.4.2",
     "next": "16.2.6",

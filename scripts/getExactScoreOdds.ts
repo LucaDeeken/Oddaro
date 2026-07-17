@@ -1,5 +1,5 @@
 import { calculateExpectedGoals } from "@/lib/calculations/calculateExpectedGoals";
-import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { calculateScoreProbabilities } from "@/lib/calculations/calculateScoreProbabilities";
 import { getRecentMatchesBySide } from "@/lib/db/getRecentMatchStats";
 import {

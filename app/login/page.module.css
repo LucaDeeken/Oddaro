@@ -1,6 +1,21 @@
+.main {
+  background:
+    radial-gradient(circle at top, rgba(60, 255, 160, 0.18), transparent 50%),
+    radial-gradient(circle at center, #1c6a45 0%, #0e3a28 55%, #071a13 100%);
+}
+
+.wholeContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+}
+
 .title {
   font-family: Outfit, var(--mantine-font-family);
   font-weight: 500;
+  color: rgb(232, 231, 231);
 }
 
 .subtitle {
@@ -8,4 +23,5 @@
   font-size: var(--mantine-font-size-sm);
   text-align: center;
   margin-top: 5px;
+  color: rgb(232, 231, 231);
 }

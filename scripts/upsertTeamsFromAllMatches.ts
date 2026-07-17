@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { getAllMatches } from "@/lib/db/getAllMatches";
 import { upsertTeams } from "@/lib/db/upsertTeams";
 

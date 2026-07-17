@@ -1,6 +1,6 @@
 import { getOddsApi } from "@/lib/api/oddsApi";
 import { oddsApiTeamNameMap } from "@/lib/mapping/clubNames";
-import { supabaseAdmin } from "@/lib/db/supabaseAdmin";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { getTeamIdByName } from "@/lib/db/getTeamIdByName";
 import { getHeadToHeadPoints } from "@/lib/calculations/calculateHeadToHeadPoints";
 import { updateH2HIntoMatches } from "@/lib/db/updateHeadToHeadIntoMatches";
