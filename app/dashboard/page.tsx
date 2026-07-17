@@ -4,7 +4,7 @@ import TippingDashboard from "@/components/TippingDashboard";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export default async function Dashboard() {
-  const matchesCup = await getMatchesBySeasonId(supabaseAdmin, 2);
+  const matchesCup = await getMatchesBySeasonId(supabaseAdmin, 4);
   //console.log(matchesCup);
   const firstMatchdayMatches = matchesCup.filter(
     (match) => match.matchday === "1. Spieltag",

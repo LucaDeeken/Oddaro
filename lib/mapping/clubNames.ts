@@ -24,6 +24,7 @@ export const oddsApiTeamNameMap: Record<string, string> = {
   "FC St. Pauli": "FC St. Pauli",
   Heidenheim: "1. FC Heidenheim 1846",
   "FC Heidenheim": "1. FC Heidenheim 1846",
+  "1. FC Heidenheim": "1. FC Heidenheim 1846",
   "Hamburger SV": "Hamburger SV",
   Hamburg: "Hamburger SV",
   "FC Cologne": "1. FC Köln",
@@ -61,6 +62,9 @@ export const oddsApiTeamNameMap: Record<string, string> = {
   Braunschweig: "Eintracht Braunschweig",
   "Preussen Munster": "Preußen Münster",
   "Preußen Münster": "Preußen Münster",
-  "Arminia Bielefeld": "Arminia Bielefeld",
+  "Arminia Bielefeld": "DSC Arminia Bielefeld",
   "Dynamo Dresden": "Dynamo Dresden",
+  "VfL Osnabrück": "VfL Osnabrück",
+  "Energie Cottbus": "Energie Cottbus",
+  "FC Energie Cottbus": "Energie Cottbus",
 };
