@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { Predictions } from "@/types/predicitonsType";
+import { useEffect, useState } from "react";
+import { Predictions, PredictionSummaryType } from "@/types/predicitonsType";
 
 import styles from "./TippingDashboard.module.css";
 
@@ -11,6 +11,7 @@ import SavePredictionSummary from "@/components/SavePredictionSummary";
 export default function TippingDashboard({ matchesCup }) {
   //Speichert die TorTipps des Users
   const [predictions, setPredictions] = useState<Predictions>({});
+
   //aktuallisiert den TippState des Users
   function updatePrediction(
     match,
@@ -43,7 +44,18 @@ export default function TippingDashboard({ matchesCup }) {
     (sum, prediction) => sum + (prediction.exactPoints ?? 0),
     0,
   );
-  console.log(predictions);
+
+  const predictionsCounterUpdated = Object.values(predictions).reduce(
+    (sum, prediction) => sum + (prediction.exactPoints > 0 ? 1 : 0),
+    0,
+  );
+
+  const matchesLengthUpdated = Object.entries(predictions).length;
+
+  const predictionSummary: PredictionSummaryType = {
+    matchesLength: matchesLengthUpdated,
+    predictionsCounter: predictionsCounterUpdated,
+  };
 
   //hole alle individuellen Datumseinträge
   const dates: string[] = [];
@@ -54,6 +66,7 @@ export default function TippingDashboard({ matchesCup }) {
     }
   }
 
+  console.log(predictions);
   return (
     <>
       <main className={styles.main}>
@@ -81,6 +94,7 @@ export default function TippingDashboard({ matchesCup }) {
         <SavePredictionSummary
           totalExactPoints={totalExactPoints}
           totalHeadToHeadPoints={totalHeadToHeadPoints}
+          predictionSummary={predictionSummary}
         />
       </main>
     </>

@@ -16,3 +16,11 @@
   height: 70px;
   width: 100%;
 }
+
+.maxPoints {
+  text-align: center;
+}
+
+.predictionSum {
+  text-align: center;
+}

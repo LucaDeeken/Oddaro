@@ -10,3 +10,8 @@ export type Prediction = {
 };
 
 export type Predictions = Record<string, Prediction>;
+
+export type PredictionSummaryType = {
+  matchesLength: number;
+  predictionsCounter: number;
+};

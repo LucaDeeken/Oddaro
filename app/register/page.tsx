@@ -1,8 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { z } from "zod";
-import { registerSchema } from "@/lib/schemas/registerSchema";
 
 import {
   Anchor,
@@ -24,40 +22,12 @@ export default function Register() {
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
 
-  async function validateOnServer() {
-    try {
-      const res = await fetch("/api/zod", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: password,
-          repeatPassword: repeatPassword,
-        }),
-      });
-
-      const text = await res.text();
-
-      let data = null;
-      try {
-        data = text ? JSON.parse(text) : null;
-      } catch {
-        data = text;
-      }
-
-      if (!res.ok) {
-        console.error("API Fehler für Zod:", { data });
-        return;
-      }
-
-      console.log(data);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  }
+  const [errors, setErrors] = useState<{
+    username?: string[];
+    email?: string[];
+    password?: string[];
+    repeatPassword?: string[];
+  }>({});
 
   async function handleRegister({
     username,
@@ -70,22 +40,30 @@ export default function Register() {
     password: string;
     repeatPassword: string;
   }) {
-    const result = registerSchema.safeParse({
-      username,
-      email,
-      password,
-      repeatPassword,
-    });
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          repeatPassword,
+        }),
+      });
 
-    console.log(result);
-    if (!result.success) {
-      const errors = z.flattenError(result.error);
+      const data = await res.json();
 
-      console.log(errors.fieldErrors);
-
-      return;
-    } else {
-      validateOnServer();
+      if (!res.ok) {
+        setErrors(data.fieldErrors);
+        return;
+      }
+      setErrors({});
+      console.log("Erfolg:", data);
+    } catch (error) {
+      console.error("Fetch error:", error);
     }
   }
 
@@ -113,7 +91,15 @@ export default function Register() {
               label: styles.label,
             }}
             value={username}
-            onChange={(event) => setUsername(event.currentTarget.value)}
+            onChange={(event) => {
+              setUsername(event.currentTarget.value);
+
+              setErrors((prev) => ({
+                ...prev,
+                username: undefined,
+              }));
+            }}
+            error={errors.username?.[0]}
           />
           <TextInput
             label="Email"
@@ -125,7 +111,15 @@ export default function Register() {
               label: styles.label,
             }}
             value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
+            onChange={(event) => {
+              setEmail(event.currentTarget.value);
+
+              setErrors((prev) => ({
+                ...prev,
+                email: undefined,
+              }));
+            }}
+            error={errors.email?.[0]}
           />
           <PasswordInput
             label="Password"
@@ -137,7 +131,15 @@ export default function Register() {
               label: styles.label,
             }}
             value={password}
-            onChange={(event) => setPassword(event.currentTarget.value)}
+            onChange={(event) => {
+              setPassword(event.currentTarget.value);
+
+              setErrors((prev) => ({
+                ...prev,
+                password: undefined,
+              }));
+            }}
+            error={errors.password?.[0]}
           />
           <PasswordInput
             label="Repeat Password"
@@ -149,7 +151,15 @@ export default function Register() {
               label: styles.label,
             }}
             value={repeatPassword}
-            onChange={(event) => setRepeatPassword(event.currentTarget.value)}
+            onChange={(event) => {
+              setRepeatPassword(event.currentTarget.value);
+
+              setErrors((prev) => ({
+                ...prev,
+                repeatPassword: undefined,
+              }));
+            }}
+            error={errors.repeatPassword?.[0]}
           />
           <Button
             fullWidth

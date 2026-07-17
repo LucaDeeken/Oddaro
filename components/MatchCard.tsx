@@ -104,10 +104,10 @@ export default function MatchCard({ match, onPredictionChange }) {
     homeGoals == null || awayGoals == null
       ? null
       : homeGoals > awayGoals
-        ? Math.round((match?.home_h2h_odd ?? 0) * 1.5)
+        ? Math.round((match?.home_h2h_odd ?? 0) * 1.4)
         : homeGoals < awayGoals
-          ? Math.round((match?.away_h2h_odd ?? 0) * 1.5)
-          : Math.round((match?.draw_h2h_odd ?? 0) * 1.5);
+          ? Math.round((match?.away_h2h_odd ?? 0) * 1.4)
+          : Math.round((match?.draw_h2h_odd ?? 0) * 1.4);
 
   useEffect(() => {
     onPredictionChange(match, homeGoals, awayGoals, tendencyPoints, points);

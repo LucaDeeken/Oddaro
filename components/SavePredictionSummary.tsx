@@ -1,5 +1,6 @@
 "use client";
 
+import { PredictionSummaryType } from "@/types/predicitonsType";
 import SaveButton from "@/components/SaveButton";
 
 import styles from "./SavePredictionSummary.module.css";
@@ -7,13 +8,23 @@ import styles from "./SavePredictionSummary.module.css";
 export default function SavePredictionSummary({
   totalExactPoints,
   totalHeadToHeadPoints,
+  predictionSummary,
+}: {
+  totalExactPoints: number | null;
+  totalHeadToHeadPoints: number | null;
+  predictionSummary: PredictionSummaryType;
 }) {
   return (
     <>
       <section className={styles.section}>
-        <p>Getippte Spiele 6/7</p>
+        <p className={styles.predictionSum}>
+          Getippte Spiele: <br></br> {predictionSummary.predictionsCounter}/
+          {predictionSummary.matchesLength}
+        </p>
         <SaveButton></SaveButton>
-        <p>Maximale Punkteausbeute: {totalExactPoints}</p>
+        <p className={styles.maxPoints}>
+          Maximale Punkteausbeute: {totalExactPoints}
+        </p>
       </section>
     </>
   );
