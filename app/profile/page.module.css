@@ -4,4 +4,16 @@
     radial-gradient(circle at center, #1c6a45 0%, #0e3a28 55%, #071a13 100%);
 
   color: white;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.card {
+  display: grid;
+  gap: 10px;
+}
+
+.header {
+  text-align: center;
 }

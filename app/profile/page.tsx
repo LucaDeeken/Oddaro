@@ -1,31 +1,45 @@
-import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+
 import styles from "./page.module.css";
+
+import {
+  ActionIcon,
+  Avatar,
+  Badge,
+  Card,
+  Group,
+  Progress,
+  Text,
+} from "@mantine/core";
+
 import LogoutButton from "@/components/LogoutButton";
+import { getProfile } from "@/lib/db/getProfile";
 
 export default async function ProfilePage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user, profile } = await getProfile();
 
   if (!user) {
-    return redirect("/login");
+    redirect("/login");
   }
 
   return (
     <main className={styles.main}>
-      <h1>Profil</h1>
+      <Card withBorder padding="xl" radius="md" w={300} className={styles.card}>
+        <h1 className={styles.header}>Profil</h1>
 
-      <p>ID: {user.id}</p>
+        <Text>Email: {user.email}</Text>
 
-      <p>Email: {user.email}</p>
+        <Text>Username: {profile?.username}</Text>
 
-      <p>Username: {user.user_metadata.username}</p>
+        <Text>
+          Erstellt am:{" "}
+          {profile?.created_at
+            ? new Date(profile.created_at).toLocaleDateString("de-DE")
+            : "-"}
+        </Text>
 
-      <p>Erstellt am: {user.created_at}</p>
-      <LogoutButton />
+        <LogoutButton />
+      </Card>
     </main>
   );
 }
