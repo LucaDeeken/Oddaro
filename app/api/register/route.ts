@@ -6,9 +6,9 @@ import { createClient } from "@/lib/supabase/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
+    console.log(body);
     const result = registerSchema.safeParse(body);
-
+    console.log(result);
     if (!result.success) {
       return NextResponse.json(
         {
@@ -36,9 +36,12 @@ export async function POST(req: Request) {
     });
 
     if (error) {
+      console.log("SUPABASE ERROR:", error);
+
       return NextResponse.json(
         {
           error: error.message,
+          fieldErrors: {},
         },
         {
           status: 400,
