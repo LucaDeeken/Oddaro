@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 import styles from "./page.module.css";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -9,7 +11,7 @@ export default async function ProfilePage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return <div>Nicht eingeloggt</div>;
+    return redirect("/login");
   }
 
   return (
@@ -23,6 +25,7 @@ export default async function ProfilePage() {
       <p>Username: {user.user_metadata.username}</p>
 
       <p>Erstellt am: {user.created_at}</p>
+      <LogoutButton />
     </main>
   );
 }
