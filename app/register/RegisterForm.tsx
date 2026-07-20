@@ -21,6 +21,8 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
+  const [registered, setRegistered] = useState(false);
+
   const [errors, setErrors] = useState<{
     username?: string[];
     email?: string[];
@@ -58,16 +60,50 @@ export default function RegisterForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrors(data.fieldErrors);
+        setErrors(data.fieldErrors ?? {});
         return;
       }
 
-      console.log("Erfolg:", data);
+      setRegistered(true);
     } catch (error) {
       console.error("Fetch error:", error);
     }
   }
 
+  // Erfolgsseite nach Registrierung
+  if (registered) {
+    return (
+      <main className={styles.main}>
+        <section className={styles.wholeContainer}>
+          <Title ta="center" className={styles.title}>
+            Erfolgreich registriert!
+          </Title>
+
+          <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
+            <Text ta="center">
+              Wir haben eine Bestätigungs-Mail an deine Email-Adresse gesendet.
+            </Text>
+
+            <Text ta="center" mt="md">
+              Bitte prüfe deinen Posteingang und bestätige deinen Account.
+            </Text>
+
+            <Button
+              component={Link}
+              href="/login"
+              fullWidth
+              mt="xl"
+              radius="md"
+            >
+              Zum Login
+            </Button>
+          </Paper>
+        </section>
+      </main>
+    );
+  }
+
+  // Normales Registrierungsformular
   return (
     <main className={styles.main}>
       <section className={styles.wholeContainer}>
