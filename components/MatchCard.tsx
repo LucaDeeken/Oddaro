@@ -9,7 +9,6 @@ export default function MatchCard({ match, onPredictionChange }) {
   const [scoreStats, setScoreStats] = useState<ScoreStat[]>([]);
 
   type ScoreStat = {
-    score: string;
     home_goals: number;
     away_goals: number;
     probability: number;

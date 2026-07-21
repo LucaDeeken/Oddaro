@@ -8,9 +8,12 @@ import MatchCard from "@/components/MatchCard";
 import DateWrapper from "@/components/DateWrapper";
 import SavePredictionSummary from "@/components/SavePredictionSummary";
 
+import { SliderWhite } from "@/components/Slider";
+
 export default function TippingDashboard({ matchesCup }) {
   //Speichert die TorTipps des Users
   const [predictions, setPredictions] = useState<Predictions>({});
+  const [matchday, setMatchday] = useState(1);
 
   //aktuallisiert den TippState des Users
   function updatePrediction(
@@ -57,21 +60,35 @@ export default function TippingDashboard({ matchesCup }) {
     predictionsCounter: predictionsCounterUpdated,
   };
 
+  console.log(predictions);
+
+  const numberOfMatchdays = new Set(matchesCup.map((match) => match.matchday))
+    .size;
+
+  const filteredMatches = matchesCup.filter(
+    (match) => match.matchday === `${matchday}. Spieltag`,
+  );
+
   //hole alle individuellen Datumseinträge
   const dates: string[] = [];
-  for (const match of matchesCup) {
+  for (const match of filteredMatches) {
     const date = new Date(match.kickoff).toLocaleDateString("de-DE");
     if (!dates.includes(date)) {
       dates.push(date);
     }
   }
-
-  console.log(predictions);
+  console.log(filteredMatches);
   return (
     <>
       <main className={styles.main}>
+        <h2 className={styles.spieltagHeader}>{matchday}. Spieltag</h2>
+        <SliderWhite
+          numberOfMatchdays={numberOfMatchdays}
+          value={matchday}
+          onChange={setMatchday}
+        />
         {dates.map((date) => {
-          const matchesForDate = matchesCup.filter((match) => {
+          const matchesForDate = filteredMatches.filter((match) => {
             const matchDate = new Date(match.kickoff).toLocaleDateString(
               "de-DE",
             );
