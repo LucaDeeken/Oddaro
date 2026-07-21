@@ -26,59 +26,33 @@ export default function MatchCard({ match, onPredictionChange }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            seasonId: match?.season_id,
-            homeTeamId: match?.home_team_id,
-            awayTeamId: match?.away_team_id,
-            kickoff: match?.kickoff,
+            matchId: match.id,
           }),
         });
 
-        const text = await res.text();
-
-        let data = null;
-        try {
-          data = text ? JSON.parse(text) : null;
-        } catch {
-          data = text;
-        }
+        const data = await res.json();
 
         if (!res.ok) {
-          console.error("API Fehler für Match:", {
-            matchId: match.id,
-            seasonId: match.season_id,
-            homeTeamId: match.home_team_id,
-            awayTeamId: match.away_team_id,
-            kickoff: match.kickoff,
-            response: data,
-          });
+          console.error("API Fehler:", data);
           return;
         }
+
         setScoreStats(data);
-        console.log("Score stats:", data);
       } catch (error) {
         console.error("Fetch error:", error);
       }
     }
 
     loadScoreStats();
-  }, [
-    match.home_team_id,
-    match.away_team_id,
-    match.id,
-    match.kickoff,
-    match.season_id,
-    match.home_h2h_odd,
-    match.away_h2h_odd,
-    match.draw_h2h_odd,
-  ]);
-
-  const exactScore =
-    homeGoals == null || awayGoals == null ? null : `${homeGoals}:${awayGoals}`;
+  }, [match.id]);
 
   const exactScoreData =
-    exactScore == null
+    homeGoals == null || awayGoals == null
       ? null
-      : scoreStats.find((item) => item.score === exactScore);
+      : scoreStats.find(
+          (item) =>
+            item.home_goals === homeGoals && item.away_goals === awayGoals,
+        );
 
   let points = exactScoreData?.points ?? 0;
 

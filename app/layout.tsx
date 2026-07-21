@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <MantineProvider>
-          <nav className={styles.nav}>Oddaro</nav>
+          <nav className={styles.nav}>Oddoro</nav>
           {children}
           <footer className={styles.footer}>Bye</footer>
         </MantineProvider>

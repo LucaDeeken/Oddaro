@@ -1,16 +1,15 @@
 import { NextResponse } from "next/server";
-import { initGetExactScoreOddsScript } from "@/scripts/getExactScoreOdds";
+import { createClient } from "@/lib/supabase/server";
+
+import { getMatchScorePoints } from "@/lib/db/getMatchScorePoints";
 
 export async function POST(req: Request) {
   try {
-    const { seasonId, homeTeamId, awayTeamId, kickoff } = await req.json();
+    const { matchId } = await req.json();
 
-    const result = await initGetExactScoreOddsScript(
-      kickoff,
-      seasonId,
-      homeTeamId,
-      awayTeamId,
-    );
+    const supabase = await createClient();
+
+    const result = await getMatchScorePoints(supabase, matchId);
 
     return NextResponse.json(result);
   } catch (error) {
