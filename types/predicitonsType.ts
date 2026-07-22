@@ -1,5 +1,5 @@
 export type Prediction = {
-  matchId: string;
+  matchId: number;
   homeTeam: string;
   awayTeam: string;
   commenceTime: string;
@@ -9,7 +9,7 @@ export type Prediction = {
   exactPoints: number | null;
 };
 
-export type Predictions = Record<string, Prediction>;
+export type Predictions = Prediction[];
 
 export type PredictionSummaryType = {
   matchesLength: number;

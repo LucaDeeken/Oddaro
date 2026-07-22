@@ -12,7 +12,7 @@ import { SliderWhite } from "@/components/Slider";
 
 export default function TippingDashboard({ matchesCup }) {
   //Speichert die TorTipps des Users
-  const [predictions, setPredictions] = useState<Predictions>({});
+  const [predictions, setPredictions] = useState<Predictions>([]);
   const [matchday, setMatchday] = useState(1);
 
   //aktuallisiert den TippState des Users
@@ -23,19 +23,19 @@ export default function TippingDashboard({ matchesCup }) {
     h2hPoints: number | null,
     exactPoints: number | null,
   ) {
-    setPredictions((prev) => ({
-      ...prev,
-      [match.id]: {
+    setPredictions((prev) => [
+      ...prev.filter((prediction) => prediction.matchId !== match.id),
+      {
         matchId: match.id,
-        homeTeam: match.home_team,
-        awayTeam: match.away_team,
-        commenceTime: match.commence_time,
+        homeTeam: match.home_team.name,
+        awayTeam: match.away_team.name,
+        commenceTime: match.kickoff,
         homeGoals,
         awayGoals,
         h2hPoints,
         exactPoints,
       },
-    }));
+    ]);
   }
 
   const totalHeadToHeadPoints = Object.values(predictions).reduce(
